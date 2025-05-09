@@ -66,66 +66,46 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 ```mermaid
 classDiagram
     class User {
-        +Id: string
-        +UserType: enum (Admin/Client/Freelancer)
-        +Balance: decimal
-        +BannedUntil: DateTime?
-        +Skills: UserSkill[]
-        +PortfolioProjects: PortfolioProject[]
-        +Certificates: Certificate[]
-        +Educations: Education[]
-        +SentMessages: ChatMessage[]
-        +ReceivedMessages: ChatMessage[]
+        +string Id
+        +UserType Type
+        +decimal Balance
+        +DateTime? BannedUntil
+        +UserSkill[] Skills
+        +PortfolioProject[] PortfolioProjects
+        +Certificate[] Certificates
+        +Education[] Educations
     }
 
     class Project {
-        +Id: int
-        +Type: enum (Bidding/FixedPrice)
-        +Status: enum (Draft/Active/Completed)
-        +Milestones: Milestone[]
-        +Proposals: Proposal[]
-        +RequiredSkills: ProjectSkill[]
-        +Category: Category
-        +Subcategory: Subcategory
+        +int Id
+        +ProjectType Type
+        +ProjectStatus Status
+        +Milestone[] Milestones
+        +Proposal[] Proposals
+        +ProjectSkill[] RequiredSkills
     }
 
     class Payment {
-        +Id: int
-        +Type: enum (Deposit/Withdrawal/Escrow)
-        +StripeTransactionId: string
-        +EscrowReleaseDate: DateTime?
-        +RelatedMilestone: Milestone?
+        +int Id
+        +PaymentType Type
+        +string StripeTransactionId
+        +DateTime? EscrowReleaseDate
     }
 
     class PortfolioProject {
-        +Id: int
-        +Images: PortfolioProjectImage[]
-        +SkillsDemonstrated: Skill[]
-    }
-
-    class Proposal {
-        +Id: int
-        +BidAmount: decimal
-        +Status: enum (Pending/Accepted/Rejected)
-        +Freelancer: User
-        +Confirmation: ProposalConfirmation?
-    }
-
-    class Notification {
-        +Id: int
-        +Type: enum (BidUpdate/Message/Payment)
-        +IsRead: bool
-        +CreatedAt: DateTime
+        +int Id
+        +PortfolioProjectImage[] Images
+        +Skill[] SkillsDemonstrated
     }
 
     User "1" --> "*" Project : PostedProjects
-    User "1" --> "*" Proposal : SubmittedProposals
-    Project "1" --> "*" Milestone : Has
+    User "1" --> "*" Proposal : Submissions
+    Project "1" --> "*" Milestone : Contains
     Project "1" --> "*" Proposal : Receives
     Proposal "1" --> "1" ProposalConfirmation : Requires
     User "1" --> "*" Notification : Receives
     User "1" --> "*" Payment : Initiates
-    PortfolioProject "1" --> "*" PortfolioProjectImage : Contains
+    PortfolioProject "1" --> "*" PortfolioProjectImage : Has
 
 
 
