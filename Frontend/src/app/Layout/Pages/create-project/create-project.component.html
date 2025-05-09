@@ -1,0 +1,598 @@
+<div class="create-project-container">
+    <div class="create-project-header">
+        <h1>Create a New Project</h1>
+        <p>Get the help you need from our talented freelancers</p>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
+        <div class="form-card">
+            <div class="form-section">
+                <h2>Basic Information</h2>
+                <div class="form-section">
+                    <h2>Project Type</h2>
+                    <div class="project-type-selector">
+                        <label class="radio-card">
+                            <input type="radio" formControlName="projectType" value="fixed" (change)="onProjectTypeChange('fixed')" />
+                            <span class="radio-content">
+                                <i class="fas fa-money-bill"></i>
+                                <span>Fixed Price</span>
+                                <small>Pay a fixed price for your project</small>
+                            </span>
+                        </label>
+    
+                        <label class="radio-card">
+                            <input type="radio" formControlName="projectType" value="bidding" (change)="onProjectTypeChange('bidding')" />
+                            <span class="radio-content">
+                                <i class="fas fa-gavel"></i>
+                                <span>Bidding</span>
+                                <small>Let freelancers bid on your project</small>
+                            </span>
+                        </label>
+                    </div>
+    
+                    <div *ngIf="isBiddingProject" class="bidding-dates">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="biddingStartDate">Bidding Start Date</label>
+                                <input type="datetime-local" id="biddingStartDate" formControlName="biddingStartDate" class="form-control"/>
+                                <small class="error-message" *ngIf="projectForm.get('biddingStartDate')?.invalid && projectForm.get('biddingStartDate')?.touched">
+                                    Start date is required
+                                </small>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label for="biddingEndDate">Bidding End Date</label>
+                                <input type="datetime-local" id="biddingEndDate" formControlName="biddingEndDate" class="form-control"/>
+                                <small class="error-message" *ngIf="projectForm.get('biddingEndDate')?.invalid && projectForm.get('biddingEndDate')?.touched">
+                                    End date is required
+                                </small>
+                            </div>
+                    
+                            <!-- <div class="form-group">
+                                <label for="minPrice">Minimum Price</label>
+                                <input type="number" id="minPrice" formControlName="minPrice" class="form-control"/>
+                                <small class="error-message" *ngIf="projectForm.get('minPrice')?.invalid && projectForm.get('minPrice')?.touched">
+                                    <span *ngIf="projectForm.get('minPrice')?.errors?.['required']">Minimum price is required</span>
+                                    <span *ngIf="projectForm.get('minPrice')?.errors?.['min']">Minimum price must be greater than 0</span>
+                                </small>
+                            </div> -->
+                    
+                            <div class="form-group">
+                                <label for="maxPrice">Bidding Start Price</label>
+                                <input type="number" id="maxPrice" formControlName="maxPrice" class="form-control"/>
+                                <small class="error-message" *ngIf="projectForm.get('maxPrice')?.invalid && projectForm.get('maxPrice')?.touched">
+                                    <span *ngIf="projectForm.get('maxPrice')?.errors?.['required']">Maximum price is required</span>
+                                    <span *ngIf="projectForm.get('maxPrice')?.errors?.['min']">Maximum price must be greater than 0</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div  class="form-group">
+                            <label for="currency">Currency</label>
+                            <select id="currency" formControlName="currency" class="form-control">
+                                <option value="">Select Currency</option>
+                                <option *ngFor="let c of getEnumValues(currencies)" [value]="c">{{currencies[c]}}</option>
+                            </select>
+                            <small class="error-message" *ngIf="projectForm.get('currency')?.invalid && projectForm.get('currency')?.touched">
+                                Please select a currency
+                            </small>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="expectedDuration">Duration (in days)</label>
+                            <input type="number" id="expectedDuration" formControlName="expectedDuration" 
+                                   placeholder="Expected months" class="form-control"/>
+                            <small class="error-message" *ngIf="projectForm.get('expectedDuration')?.invalid && projectForm.get('expectedDuration')?.touched">
+                                <span *ngIf="projectForm.get('expectedDuration')?.errors?.['required']">Duration is required</span>
+                                <span *ngIf="projectForm.get('expectedDuration')?.errors?.['min']">Duration must be at least 1 month</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="title">Project Title</label>
+                    <input type="text" id="title" formControlName="title" 
+                           placeholder="Enter a clear title describing your project"
+                           class="form-control" />
+                    <small class="form-hint">Example: Build a responsive website using React</small>
+                    <small class="error-message" *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched">
+                        <span *ngIf="projectForm.get('title')?.errors?.['required']">Title is required</span>
+                        <span *ngIf="projectForm.get('title')?.errors?.['minlength']">Title must be at least 10 characters</span>
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Project Description</label>
+                    <textarea id="description" formControlName="description" 
+                              placeholder="Describe your project in detail"
+                              class="form-control" rows="6"></textarea>
+                    <small class="form-hint">Be specific about your requirements and expectations</small>
+                    <small class="error-message" *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched">
+                        <span *ngIf="projectForm.get('description')?.errors?.['required']">Description is required</span>
+                        <span *ngIf="projectForm.get('description')?.errors?.['minlength']">Description must be at least 30 characters</span>
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <!-- <h2>Project Details</h2> -->
+                
+               
+
+                <div class="form-group">
+                    <label for="experienceLevel">Experience Level</label>
+                    <div class="experience-level-selector">
+                        <label class="radio-card">
+                            <input type="radio" formControlName="experienceLevel" [value]="experienceLevel.Entry" />
+                            <span class="radio-content">
+                                <i class="fas fa-user"></i>
+                                <span>{{experienceLevel[0]}}</span>
+                                <small>Looking for someone relatively new</small>
+                            </span>
+                        </label>
+
+                        <label class="radio-card">
+                            <input type="radio" formControlName="experienceLevel"[value]="experienceLevel.Intermediate" />
+                            <span class="radio-content">
+                                <i class="fas fa-user-tie"></i>
+                                <span>{{experienceLevel[1]}}</span>
+                                <small>Looking for substantial experience</small>
+                            </span>
+                        </label>
+
+                        <label class="radio-card">
+                            <input type="radio" formControlName="experienceLevel" [value]="experienceLevel.Expert" />
+                            <span class="radio-content">
+                                <i class="fas fa-star"></i>
+                                <span>{{experienceLevel[2]}}</span>
+                                <small>Looking for comprehensive expertise</small>
+                            </span>
+                        </label>
+                        <small class="error-message" *ngIf="projectForm.get('experienceLevel')?.invalid && projectForm.get('experienceLevel')?.touched">
+                            Please select an experience level
+                        </small>
+                    </div>
+                </div>
+            </div>
+              <!-- Subcategory Section -->
+              <div class="form-section">
+                <h2>Subcategory</h2>
+                <div class="form-group">
+                    <label for="subcategoryID">Select Subcategory</label>
+                    <select id="subcategoryID" formControlName="subcategoryID" class="form-control">
+                        <option *ngFor="let sub of subcategories" [value]="sub.id">{{ sub.name }}</option>
+                      </select>
+                    
+                    <small class="form-hint">Choose a subcategory for your project</small>
+
+                    <small class="error-message" *ngIf="projectForm.get('subcategoryID')?.invalid && projectForm.get('subcategoryID')?.touched">
+                        Please select a subcategory
+                    </small>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="form-section">
+                <h2>Skills</h2>
+                <div class="form-group">
+                    <label for="projectSkills">Select Skills</label>
+                    <select id="projectSkills" formControlName="projectSkills" class="form-control" multiple>
+                        <option *ngFor="let skill of availableSkills" [value]="skill.id">{{ skill.name }}</option>
+                      </select>
+                    <small class="form-hint">Choose the relevant skills for your project</small>
+
+                    <small class="error-message" *ngIf="projectForm.get('projectSkills')?.invalid && projectForm.get('projectSkills')?.touched">
+                        Please select at least one skill
+                    </small>
+                </div>
+            </div>
+
+<!-- Fixed Price Field (only shown for fixed price projects) -->
+<div *ngIf="!isBiddingProject" class="form-group">
+    <label for="fixedPrice">Fixed Price</label>
+    <input type="number" id="fixedPrice" formControlName="fixedPrice" class="form-control"/>
+    <small class="error-message" *ngIf="projectForm.get('fixedPrice')?.invalid && projectForm.get('fixedPrice')?.touched">
+        <span *ngIf="projectForm.get('fixedPrice')?.errors?.['required']">Fixed price is required</span>
+        <span *ngIf="projectForm.get('fixedPrice')?.errors?.['min']">Fixed price must be greater than 0</span>
+    </small>
+</div>
+
+          
+            
+            <div class="form-actions">
+            </div>
+            <button type="submit"  class="btn-primary" [disabled]="projectForm.invalid">
+            <!-- <button type="submit" class="btn-primary"> -->
+
+                Post Project
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="form-actions">
+               
+                
+                <!-- Navigation buttons -->
+                <div class="navigation-buttons">
+                    <!-- <button type="button" class="btn-secondary" routerLink="/fixed">
+                        <i class="fas fa-list"></i>
+                        Go to Fixed Projects
+                    </button>
+                    <button type="button" class="btn-secondary" routerLink="/new">
+                        <i class="fas fa-list"></i>
+                        Go to Bidding Projects
+                    </button> -->
+                   
+                    <button *ngIf="createdProjectId" class="btn btn-secondary" [routerLink]="['/fixed-project', createdProjectId]">
+                        <i class="fas fa-info-circle"></i>
+                        View Project Details
+                      </button>
+                      </div>
+              
+            </div>
+        </div>
+
+        
+    </form>
+</div>
+
+
+
+
+<style>
+
+.create-project-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.create-project-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.create-project-header h1 {
+    color: #175b99;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.create-project-header p {
+    color: #666;
+    font-size: 16px;
+}
+
+.form-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.form-section {
+    margin-bottom: 40px;
+}
+
+.form-section h2 {
+    color: #001e00;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+label {
+    display: block;
+    color: #001e00;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.form-control:focus {
+    border-color: #175b99;
+    box-shadow: 0 0 0 2px rgba(20, 168, 0, 0.1);
+    outline: none;
+}
+
+.form-hint {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Experience Level and Project Type Sections */
+.experience-level-selector,
+.project-type-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.radio-card {
+    cursor: pointer;
+    position: relative;
+}
+
+.radio-card input {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.radio-content i {
+    font-size: 24px;
+    color: #175b99;
+    margin-bottom: 10px;
+}
+
+.radio-content span {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.radio-content small {
+    color: #666;
+    font-size: 12px;
+}
+
+.radio-card input:checked + .radio-content {
+    border-color: #175b99;
+    background: rgba(20, 168, 0, 0.05);
+}
+
+/* Skills and Subcategory Sections */
+.form-section .form-group {
+    margin-bottom: 20px;
+}
+
+.skills-container, .subcategory-container {
+    display: flex;
+    height: 20px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skills-container select, .subcategory-container select {
+    width: 100%;
+    padding: 12px;
+    height: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.skills-container select:focus, .subcategory-container select:focus {
+    border-color: #175b99;
+    box-shadow: 0 0 0 2px rgba(20, 168, 0, 0.1);
+    outline: none;
+}
+
+/* Bidding Dates */
+.bidding-dates {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: #175b99;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #175b99;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: white;
+    color: #666;
+    border: 1px solid #e0e0e0;
+}
+
+.btn-secondary:hover {
+    background: #f5f5f5;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .create-project-container {
+        padding: 20px 15px;
+    }
+
+    .form-card {
+        padding: 20px;
+    }
+
+    .experience-level-selector,
+    .project-type-selector {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skills-select-container {
+    position: relative;
+}
+
+.selected-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.skill-tag {
+    background: #e8f5e9;
+    color: #175b99;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-tag i {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.skill-tag:hover {
+    background: #c8e6c9;
+}
+
+/* تحسينات حقل السعر */
+.price-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.price-input {
+    padding-left: 28px !important;
+}
+
+.validation-feedback {
+    margin-top: 8px;
+}
+
+.error-message {
+    color: #dc3545;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.error-message i {
+    font-size: 14px;
+}
+
+/* تحسين حجم حقل اختيار المهارات المتعدد */
+select[multiple] {
+    height: 120px !important;
+    padding: 8px;
+}
+
+select[multiple] option {
+    padding: 8px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+}
+
+select[multiple] option:hover {
+    background-color: #f5f5f5;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.navigation-buttons .btn-secondary {
+    flex: 1;
+    justify-content: center;
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navigation-buttons .btn-secondary:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.navigation-buttons .btn-secondary i {
+    font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navigation-buttons {
+        flex-direction: column;
+    }
+}
+</style>

@@ -1,0 +1,169 @@
+<div class="container py-4">
+
+<!-- Header -->
+<div class="row mb-4">
+  <div class="col-lg-8 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h1 class="h2 mb-2">User Dashboard</h1>
+        <p class="text-muted mb-1">Welcome to your administration panel</p>
+        <small class="text-secondary">last updated: {{ lastUpdated | date:'medium' }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Top Stats Row -->
+<div class="row justify-content-center">
+  <div class="col-xl-10">
+<div class="row g-4 mb-4">
+  <!-- User Stats -->
+  <div class="col-md-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-users me-2 text-primary"></i>
+          <h5 class="card-title mb-0">User Statistics</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Unique Clients
+            <span class="badge bg-primary rounded-pill">{{ userCounts.clients }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Types -->
+  <div class="col-md-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-project-diagram me-2 text-info"></i>
+          <h5 class="card-title mb-0">Projects Types</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Total Projects
+            <span class="badge bg-secondary rounded-pill">{{ projectStats.Bidding + projectStats.Fixed }}</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Bidding Projects
+            <span class="badge bg-primary rounded-pill">{{ projectStats.Bidding }}</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Fixed Price Projects
+            <span class="badge bg-info rounded-pill">{{ projectStats.Fixed }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Stats -->
+  <div class="col-md-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-tasks me-2 text-success"></i>
+          <h5 class="card-title mb-0">Project Statistics</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Total Projects
+            <span class="badge bg-secondary rounded-pill">{{ projectStats.total }}</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Completed
+            <span class="badge bg-success rounded-pill">{{ projectStats.completed }}</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Working
+            <span class="badge bg-info rounded-pill">{{ projectStats.Working }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Bottom Stats Row -->
+<div class="row g-4 mb-4">
+  <!-- Proposal Stats -->
+  <div class="col-md-6">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-file-alt me-2 text-warning"></i>
+          <h5 class="card-title mb-0">Proposal Statistics</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Total Proposals
+            <span class="badge bg-primary rounded-pill">{{ proposalStats.total }}</span>
+          </div>
+          <!-- <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Avg. per Project
+            <span class="badge bg-info rounded-pill">{{ proposalStats.averagePerProject | number:'1.1-1' }}</span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate Stats -->
+  <div class="col-md-6">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-certificate me-2 text-warning"></i>
+          <h5 class="card-title mb-0">Certificate Statistics</h5>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+            Pending Certificates
+            <span class="badge bg-warning rounded-pill">{{ pendingCertificates }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row g-4">
+  <!-- Revenue Chart -->
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-chart-line me-2 text-primary"></i>
+          <h5 class="card-title mb-0">Monthly Revenue</h5>
+        </div>
+        <div class="chart-container">
+          <canvas baseChart [data]="revenueChartData" [options]="lineChartOptions" type="line"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Status Chart -->
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <i class="fas fa-chart-pie me-2 text-success"></i>
+          <h5 class="card-title mb-0">Project Status Distribution</h5>
+        </div>
+        <div class="chart-container">
+          <canvas baseChart [data]="projectStatusChartData" [options]="pieChartOptions" type="pie"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,237 @@
+<div class="jobs-available-section">
+  <div class="hero-overlay"></div>
+  <div class="jobs-available-content">
+
+    <div class="jobs-illustration">
+      <div>
+        <h1 class="jobs-count">Manage Your project Milestones</h1>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="milestones-container">
+  <div class="milestones-header">
+    <h1>Project Milestones</h1>
+    <div class="stat-item">
+      <span class="stat-value">{{milestones.length}}</span>
+      <span class="stat-label">Total Milestones</span>
+    </div>
+  </div>
+ 
+  <div  *ngIf="areAllMilestonesCompleted()" class="project-review-section" >
+    <div class="review-card">
+      <div class="review-header">
+        <h3>{{ existingReview ? 'Update Your Review' : 'Project Completed Successfully!' }}</h3>
+        <p>{{ existingReview ? 'Edit your review for the' : 'Share your experience working with the' }} 
+           {{ isProjectClient ? 'Freelancer' : 'Client' }}</p>
+      </div>
+  
+      <!-- Add this sentiment display section -->
+      <div class="sentiment-feedback">
+        <div class="sentiment-badge" [ngClass]="{
+          'positive': sentiment === 'positive',
+          'negative': sentiment === 'negative',
+          'neutral': sentiment === 'neutral'
+        }">
+          <i class="fas" [ngClass]="{
+            'fa-smile': sentiment === 'positive',
+            'fa-frown': sentiment === 'negative',
+            'fa-meh': sentiment === 'neutral'
+          }"></i>
+          <span>{{ sentiment | titlecase }} Sentiment</span>
+          <small>({{ (sentimentScore * 100).toFixed(1) }}% confidence)</small>
+        </div>
+      </div>
+  
+      <form [formGroup]="reviewForm" (ngSubmit)="submitProjectReview()">
+        <div class="rating-container">
+          <label>Rating:</label>
+          <div class="stars">
+            <i *ngFor="let star of [1,2,3,4,5]" 
+               class="fas fa-star"
+               [class.active]="star <= reviewForm.get('rating')?.value"
+               (click)="setRating(star)"></i>
+          </div>
+        </div>
+        
+        <div class="comment-container">
+          <label>Comment:</label>
+          <textarea 
+            formControlName="comment" 
+            rows="3" 
+            placeholder="Share your experience..."></textarea>
+          <div class="error-message" *ngIf="reviewForm.get('comment')?.touched && reviewForm.get('comment')?.invalid">
+            Please enter a comment (minimum 10 characters)
+          </div>
+        </div>
+  
+        <button type="submit" class="submit-review-btn" [disabled]="reviewForm.invalid">
+          {{ existingReview ? 'Update Review' : 'Submit Review' }}
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="milestones-timeline" *ngIf="milestones.length > 0">
+    <div class="milestone-card" *ngFor="let milestone of milestones; let i = index">
+      <div class="milestone-content">
+        <div class="milestone-header">
+          <h3>{{milestone.title}}</h3>
+          <span 
+            class="milestone-status"
+            [ngClass]="{
+              'Completed': milestone.status === 1,
+              'in-progress': milestone.status === 0
+            }">
+            {{ getStatusText(milestone.status) }}
+          </span>
+
+          
+        </div>
+
+        <!-- Actions based on user role -->
+        <!-- <div class="milestone-actions" *ngIf="milestone.status === 0">
+          <div class="file-upload-section" *ngIf="isProjectFreelancer && isFirstPendingMilestone(milestone)">
+            <input 
+              type="file" 
+              #fileInput 
+              (change)="onFileSelected($event, milestone.id??0)" 
+              multiple 
+              style="display: none;">
+            <div class="file-upload-placeholder" (click)="fileInput.click()">
+              <i class="fas fa-plus"></i>
+            </div>
+          </div>
+        </div> -->
+        
+        <div class="milestone-info">
+          <p class="description">{{milestone.description}}</p>
+          <div class="milestone-details">
+            <div class="milestone-details-left">
+              <div class="detail">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Start: {{milestone.startDate | date}}</span>
+              </div>
+              <div class="detail">
+                <i class="fas fa-flag-checkered"></i>
+                <span>Due: {{milestone.endDate | date}}</span>
+              </div>
+              <div class="detail">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Amount: ${{milestone.amount}}</span>
+              </div>
+            </div>
+            <div class="milestone-actions" *ngIf="isLatestMilestone(milestone) && milestone.status === 0">
+              <button class="btn btn-danger" (click)="openDisputeModal(milestone.id!)">
+                <i class="fas fa-exclamation-triangle"></i> Dispute
+              </button>
+            </div>
+          </div> 
+        </div>
+
+       
+
+        <!-- Milestone Files Section - Fixed to prevent duplicate files display -->
+        <div class="milestone-files" *ngIf="milestone.files && milestone.files.length > 0 || (isProjectFreelancer && isFirstPendingMilestone(milestone) && milestone.status === 0)">
+          <h4>Attachments</h4>
+          <div class="file-container">
+            <ng-container *ngFor="let file of milestone.files">
+              <!-- Image files -->
+              <div class="file-preview" *ngIf="getFileType(file) === 'image'" (click)="openImageModal(file)">
+                <img [src]="file" alt="Milestone Image">
+                <!-- <div class="file-actions" *ngIf="isProjectFreelancer && milestone.status === 0"> -->
+                  <button 
+                    *ngIf="isProjectFreelancer && milestone.status === 0" 
+                    class="delete-btn" 
+                    (click)="deleteFile(file)">
+                    <i class="fa fa-times"></i>
+                </button>
+                <!-- </div> -->
+              </div>
+              
+              <!-- Video files -->
+              <div class="file-preview" *ngIf="getFileType(file) === 'video'">
+                <video [src]="file" controls></video>
+                <button 
+                    *ngIf="isProjectFreelancer && milestone.status === 0" 
+                    class="delete-btn" 
+                    (click)="deleteFile(file)">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Other files -->
+            <div class="file-preview" *ngIf="getFileType(file) === 'other'">
+                <a [href]="file" target="_blank" download>
+                    <i class="fa fa-file"></i>
+                    <span>Download File</span>
+                </a>
+                <button 
+                    *ngIf="isProjectFreelancer && milestone.status === 0" 
+                    class="delete-btn" 
+                    (click)="deleteFile(file)">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            </ng-container>
+            
+            <!-- File upload placeholder - now inside the file container -->
+            <div class="file-upload-section" *ngIf="isProjectFreelancer && isFirstPendingMilestone(milestone) && milestone.status === 0">
+              <input 
+                type="file" 
+                #fileInput 
+                (change)="onFileSelected($event, milestone.id??0)" 
+                multiple 
+                style="display: none;">
+              <div class="file-preview file-upload-placeholder" (click)="fileInput.click()">
+                <i class="fas fa-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="confirm-milestone-container" *ngIf="isProjectClient && milestone.status === 0 && isFirstPendingMilestone(milestone)">
+          <button 
+            class="btn btn-primary confirm-btn" 
+            (click)="confirmMilestone(milestone.id??0)">
+            <i class="fa fa-check"></i> Confirm Milestone
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="milestones.length === 0">
+    <i class="fas fa-clipboard-list"></i>
+    <h2>No Milestones Found</h2>
+    <p>This project doesn't have any milestones yet.</p>
+  </div>
+</div>
+
+<div class="image-modal"  [class.show]="selectedImage" (click)="closeImageModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close-modal" (click)="closeImageModal()">&times;</span>
+    <img *ngIf="selectedImage" [src]="selectedImage" alt="Full size image">
+  </div>
+</div>
+
+
+<div class="dispute-modal" [class.show]="showDisputeModal" (click)="closeDisputeModal()">
+  <div class="dispute-modal-content" (click)="$event.stopPropagation()">
+    <h2>Submit Dispute</h2>
+    <form class="dispute-form" (ngSubmit)="submitDispute()">
+      <textarea 
+        [(ngModel)]="disputeReason" 
+        name="disputeReason"
+        placeholder="Please explain the reason for your dispute..."
+        required></textarea>
+      <div class="dispute-actions">
+        <button type="button" class="dispute-cancel" (click)="closeDisputeModal()">Cancel</button>
+        <button type="submit" class="dispute-submit" [disabled]="!disputeReason">Submit Dispute</button>
+      </div>
+    </form>
+  </div>
+</div>

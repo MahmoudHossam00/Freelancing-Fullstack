@@ -1,0 +1,409 @@
+<div class="jobs-available-section">
+    <div class="hero-overlay"></div>
+    <div class="jobs-available-content">
+  
+      <div class="jobs-illustration">
+        <div>
+          <h1 class="jobs-count">Available Jobs</h1>
+          <!-- <span class="jobs-text"></span> -->
+        </div>
+      </div>
+      <!-- <div class="stats-image">
+        <img src="images/loan.png" alt="Stats" />
+      </div> -->
+    </div>
+  </div>
+  
+  <div class="upwork-container">
+    <!-- Search Bar and Filters -->
+    <!-- <div class="container pt-5">
+      <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="upwork-searchbar d-flex">
+           
+            <input type="text" placeholder="Search for jobs" class="form-control border-0 shadow-none" />
+
+            <button class="search-btn">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+    <div class="container pt-5">
+      <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="upwork-searchbar d-flex">
+            <input 
+              type="text" 
+              placeholder="Search for jobs" 
+              class="form-control border-0 shadow-none" 
+              [(ngModel)]="searchTerm"
+              (input)="onSearch()"
+              name="searchTerm"
+            />
+            <button class="search-btn" (click)="onSearch()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row gap-2">
+        <!-- Results Count and Sorting -->
+        <div class="col-12 mb-4">
+          <div class="filter-stats">
+            <div class="results-count">
+              Showing {{projects.length}} of {{projectsBeforeAnyFilters.length}} projects
+            </div>
+            <div class="view-options">
+              <span class="sort-label">Sort by:</span>
+              <select class="sort-select" [(ngModel)]="currentSort" (change)="sortProducts(currentSort)">
+                <option value="featured">Featured</option>
+                <option value="price-low-high">Price: Low to High</option>
+                <option value="price-high-low">Price: High to Low</option>
+                <!-- <option value="Latest">Date: Latest</option>
+                <option value="Oldest">Date: Oldest</option> -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="project-navigation container py-3 border-bottom">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/new" routerLinkActive="active">Bidding Projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/fixed" routerLinkActive="active">Fixed Projects</a>
+            </li>
+           
+          </ul>
+        </div>
+  
+        <!-- Sidebar Filters -->
+        <aside class="upwork-sidebar col-lg-4 col-md-5 col-sm-12 mb-4">
+          <!-- Experience Level Filter -->
+          <div class="sidebar-section">
+            <div class="sidebar-label-row" (click)="expOpen = !expOpen">
+              <label class="sidebar-label">Experience level</label>
+              <span class="chevron" [class.open]="expOpen"></span>
+            </div>
+            <div class="sidebar-group-content" *ngIf="expOpen">
+              <div *ngFor="let level of experienceLevels">
+                <label class="custom-checkbox">
+                  <input 
+                    type="checkbox"
+                    #checkbox 
+                    [checked]="filters.experienceLevels?.includes(level)"
+                    (change)="onExperienceLevelChange(level,checkbox.checked)" 
+                  />
+                  <span class="checkbox-text">{{ getExperienceLevelLabel(level) }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Proposals Filter -->
+          <div class="sidebar-section">
+            <div class="sidebar-label-row" (click)="proposalsOpen = !proposalsOpen">
+              <label class="sidebar-label">Number of proposals</label>
+              <span class="chevron" [class.open]="proposalsOpen"></span>
+            </div>
+            <div class="sidebar-group-content" *ngIf="proposalsOpen">
+              <div class="range-inputs">
+                <input 
+                  type="number" 
+                  [(ngModel)]="filters.minProposals" 
+                  placeholder="Min" 
+                  class="form-control"
+                  (input)="onMinProposalsChange($event)"
+                />
+                <span class="range-separator">to</span>
+                <input 
+                  type="number" 
+                  [(ngModel)]="filters.maxProposals" 
+                  placeholder="Max" 
+                  class="form-control"
+                  (input)="onMaxProposalsChange($event)"
+                />
+              </div>
+            </div>
+          </div>
+  
+          <!-- Price Filter -->
+          <div class="sidebar-section">
+            <div class="sidebar-label-row" (click)="priceOpen = !priceOpen">
+              <label class="sidebar-label">Price</label>
+              <span class="chevron" [class.open]="priceOpen"></span>
+            </div>
+            <div class="sidebar-group-content" *ngIf="priceOpen">
+              <div class="range-inputs">
+                <input 
+                  type="number" 
+                  [(ngModel)]="filters.minPrice" 
+                  placeholder="Min" 
+                  class="form-control"
+                  (input)="onMinPriceChange($event)"
+                />
+                <span class="range-separator">to</span>
+                <input 
+                  type="number" 
+                  [(ngModel)]="filters.maxPrice" 
+                  placeholder="Max" 
+                  class="form-control"
+                  (input)="onMaxPriceChange($event)"
+                />
+              </div>
+            </div>
+          </div>
+  
+          <!-- Duration Filter -->
+          <div class="sidebar-section">
+            <div class="sidebar-label-row" (click)="durationOpen = !durationOpen">
+              <label class="sidebar-label">Project Duration (months)</label>
+              <span class="chevron" [class.open]="durationOpen"></span>
+            </div>
+            <div class="sidebar-group-content" *ngIf="durationOpen">
+              <div class="range-inputs">
+                <input 
+                  type="number" 
+                  [(ngModel)]="filters.minDuration" 
+                  placeholder="Min" 
+                  class="form-control"
+                  (input)="onMinDurationChange($event)"
+                />
+                <span class="range-separator">to</span>
+                <input 
+                  type="number" 
+                  [(ngModel)]="filters.maxDuration" 
+                  placeholder="Max" 
+                  class="form-control"
+                  (input)="onMaxDurationChange($event)"
+                />
+              </div>
+            </div>
+          </div>
+  
+          <!-- Currency Filter -->
+          <div class="sidebar-section">
+            <div class="sidebar-label-row" (click)="currencyOpen = !currencyOpen">
+              <label class="sidebar-label">Currency</label>
+              <span class="chevron" [class.open]="currencyOpen"></span>
+            </div>
+            <div class="sidebar-group-content" *ngIf="currencyOpen">
+              <input
+                type="text"
+                class="mb-3 custom-search-input"
+                placeholder="Search currency"
+                [(ngModel)]="currencySearch"
+              />
+              <div *ngFor="let currency of currencies | filter:currencySearch">
+                <label class="custom-checkbox">
+                  <input
+                    type="checkbox"
+                    #checkbox
+                    [checked]="filters.currency?.includes(currency)"
+                    (change)="onCurrencyChange(currency,checkbox.checked)"
+                  />
+                  <span class="checkbox-text">{{ currency }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Categories Filter -->
+          <div class="sidebar-section category">
+            <div class="sidebar-label-row" (click)="categoryDropdownOpen = !categoryDropdownOpen">
+              <label class="sidebar-label">Categories</label>
+              <span class="chevron" [class.open]="categoryDropdownOpen"></span>
+            </div>
+
+
+            <div class="sidebar-group-content" *ngIf="categoryDropdownOpen">
+              
+              
+              <input
+              type="text"
+              class=" mb-3 custom-search-input"
+              placeholder="Search currency"
+              [(ngModel)]="categorySearch"
+            />
+
+              
+                <div *ngFor="let category of Categories ">
+               
+                  <p class="category-title">{{ category.name }} <p>
+                  <div *ngFor="let sub of getSubcategoriesOfCategory(category.id) | filter:categorySearch">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" [checked]="filters.categoryIds?.includes(sub.id)" (change)="selectSubCategory(sub.id)" />
+                      <span class="checkbox-custom"></span>
+                      <span class="checkbox-text">{{ sub.name }}</span>
+                    </label>
+
+                  </div>
+
+                </div>
+
+
+            </div>
+          </div>
+  
+          <!-- Filter Actions -->
+          <!-- <div class="filter-actions">
+            <button class="btn-apply" (click)="applyFilters()">Apply Filters</button>
+            <button class="btn-clear" (click)="clearFilters()">Clear All</button>
+          </div> -->
+        </aside>
+  
+        <!-- Projects Results -->
+        <section class="upwork-results col-lg-8 col-md-7 col-sm-12">
+          <div *ngFor="let project of projects" class="upwork-project-card">
+            <a [routerLink]="['/fixed-project', project.id]">
+
+
+              <!-- <div class="project-card-header d-flex justify-content-between align-items-center">
+                <span class="posted-time">Posted {{project.postedFrom | timeAgo}}</span>
+
+              
+              </div>
+              
+              <h3 class="project-title">{{ project.title }}</h3> -->
+
+              <div class="project-card-header py-3">
+
+                <h3 class="project-title">{{project.title}}</h3>
+
+                <div class="bidding-status-container flex-row" style="display: flex; flex-direction: row;">
+                  <span class="posted-time">Posted {{project.postedFrom | timeAgo}}</span>
+
+                </div>
+
+              </div>
+
+
+              <div class=" d-flex flex-wrap align-items-center mb-3">
+                <div class="bid-info-container">
+                  <div class="bid-info-item bid-start">
+                    <!-- <i class="fas fa-flag-checkered"></i> -->
+                    <i class="fa-solid fa-money-bill-1-wave"></i>
+                    <div class="bid-info-content">
+                      <span class="bid-info-label">Price</span>
+                      <span class="bid-info-value">{{project.price | currency:project.currency}}</span>
+                    </div>
+                  </div>
+                  
+                
+                  
+                  <div class="bid-info-item bid-count">
+                    <i class="fas fa-users"></i>
+                    <div class="bid-info-content">
+                      <span class="bid-info-label">Proposals</span>
+                      <span class="bid-info-value">{{project.proposalsCount}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+              
+              <div class="project-meta d-flex gap-3 align-items-center mb-3">
+                <span class="meta ">
+                  <i class="fa fa-check-circle"></i> Payment verified
+                </span>
+                <span class="meta ">
+                  <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+                    <i
+                      class="fa fa-star"
+                      [ngClass]="{'star-color': project.clientRating >= star, 'text-muted': project.clientRating < star}"
+                      style="margin-right:2px;"
+                    ></i>
+                  </ng-container>
+                  <span class="ms-1" style="font-size:13px;">({{project.clientRating | number:'1.1-1'}})</span>
+                </span>
+    
+                <span class="meta "><i class="fa-solid fa-location-dot"></i> {{project.clientCountry}}</span>
+
+                <span class="meta "><i class="fas fa-star-half-alt"></i>{{ project.experienceLevel }}</span>
+
+              </div>
+              
+              <!-- <div class="project-meta d-flex flex-wrap align-items-center mb-3">
+                <span class="meta dot">{{ project.experienceLevel }}</span>
+                <span class="meta dot">Price: {{ project.price }} {{ project.currency }}</span>
+                <span class="meta dot">Est. Time: {{ project.expectedDuration }} months</span>
+              </div> -->
+              
+              <div class="project-meta d-flex flex-wrap align-items-center mb-1">
+             
+                <div class="project-description mb-1">
+                  {{project.description}}
+                </div>
+              </div>
+              
+              <div class="d-flex justify-content-between ">
+
+
+                <div class="project-tags mb-4 mt-4 col-lg-10 col-md-10 col-sm-12">
+                  <span *ngFor="let skill of project.projectSkills" class="gap-2">{{ skill }}</span>
+                </div>
+          
+                <div class="mt-4 align-items-end">
+                  <div *ngIf="this.role=='Freelancer'" class="project-actions d-flex">
+                    <i 
+                    (click)="toggleWishlist(project.id); $event.preventDefault(); $event.stopPropagation()" 
+                    class="fa-bookmark fs-4"
+                    [class.fa-regular]="!userWishlist2.includes(project.id,0)" [class.fa-solid]="userWishlist2.includes(project.id,0)" [style.color]="'#175b99'"></i>
+    
+                  </div>
+                </div>
+
+              </div>
+
+
+            </a>
+          </div>
+  
+          <!-- Pagination -->
+          <!-- <div class="pagination-container">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <a class="page-link" (click)="onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
+                    Previous
+                  </a>
+                </li>
+                <li class="page-item" 
+                    *ngFor="let page of getPageNumbers()" 
+                    [class.active]="currentPage === page">
+                  <a class="page-link" (click)="onPageChange(page)">
+                    {{page}}
+                  </a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                  <a class="page-link" (click)="onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+                    Next
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div> -->
+
+
+        </section>
+      </div>
+    </div>
+  </div>

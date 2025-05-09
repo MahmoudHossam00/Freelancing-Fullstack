@@ -1,0 +1,153 @@
+<!-- <div class="container mt-5 mb-5">
+  <div class="col-12 float-left">
+    <div class="wt-proposalholder mt-5">
+      <span class="wt-featuredtag"><img src="images/featured.png" alt="img description" data-tipso="Plus Member" class="template-content tipso_style"></span>
+      <div class="wt-proposalhead">
+        <h2>Update Ban</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <div class="card-body">
+            <form class=" mb-4 mx-auto"  (submit)="Updateban(ban)" >
+              <div class="form-group">
+                <label for="banDescription">ID</label>
+                <input type="text" id="banDescription" value={{ban.id}} readonly name="id" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="banDescription">Banned User UserName</label>
+                <input type="text" id="banDescription" value={{ban.bannedUserName}} readonly name="username" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="banDescription">Ban Date</label>
+
+              </div>
+              <div class="form-group">
+                <label for="banDescription">Ban EndDate</label>
+
+              </div>
+              <div class="form-group">
+                <label for="banDescription">Description</label>
+
+              </div>
+              <button type="submit" class="btn btn-primary">Update Ban</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+ -->
+ <main class="update-ban-dashboard">
+  <div class="dashboard-container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-nav">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/banned']">Banned Users</a></li>
+        <li class="breadcrumb-item active">Update Ban</li>
+      </ol>
+    </nav>
+
+    <div class="form-card">
+      <div class="card-header">
+        <h1 class="form-title">Update Ban Details</h1>
+      </div>
+
+      <div class="card-body">
+        <form class="ban-form" (ngSubmit)="Updateban(ban)">
+          <!-- Read-only Fields -->
+          <div class="form-group readonly">
+            <label for="banId">
+              <i class="fas fa-id-badge"></i>
+              Ban ID
+            </label>
+            <input
+              type="text"
+              id="banId"
+              [value]="ban.id"
+              readonly
+              name="id"
+              class="form-control"
+            >
+          </div>
+
+          <div class="form-group readonly">
+            <label for="userName">
+              <i class="fas fa-user"></i>
+              User Name
+            </label>
+            <input
+              type="text"
+              id="userName"
+              [value]="ban.bannedUserName"
+              readonly
+              name="username"
+              class="form-control"
+            >
+          </div>
+
+          <div class="form-group readonly">
+            <label for="banDate">
+              <i class="fas fa-calendar-alt"></i>
+              Ban Start Date
+            </label>
+            <input
+              type="text"
+              id="banDate"
+              [value]="ban.banDate | date:'mediumDate'"
+              readonly
+              name="bandate"
+              class="form-control"
+            >
+          </div>
+
+          <!-- Editable Fields -->
+          <div class="form-group">
+            <label for="banEndDate">
+              <i class="fas fa-calendar-check"></i>
+              Ban End Date
+              <span class="required">*</span>
+            </label>
+            <input
+              type="date"
+              id="banEndDate"
+              [(ngModel)]="ban.banEndDate"
+              required
+              name="banenddate"
+              class="form-control"
+              
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="description">
+              <i class="fas fa-comment-alt"></i>
+              Description
+            </label>
+            <textarea
+              id="description"
+              [(ngModel)]="ban.description"
+              name="description"
+              class="form-control"
+              rows="4"
+              placeholder="Enter ban reason or additional notes..."
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" [routerLink]="['/banned']">
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+            <button type="submit" class="btn-update">
+              <i class="fas fa-save"></i>
+              Update Ban
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,149 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="container">
+      <div class="profile-info">
+        <div class="profile-avatar">
+          <img src="assets/images/profile-pic.jpg" alt="Profile Picture">
+          <div class="online-status active"></div>
+        </div>
+        <div class="profile-details">
+          <h1>John Developer</h1>
+          <h2>Full Stack Web Developer</h2>
+          <p class="location"><i class="fas fa-map-marker-alt"></i> New York, United States</p>
+          <p class="member-since">Member since Mar 2024</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-lg-8">
+        <div class="profile-tabs">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Employment History</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="profile-section">
+          <div class="section-header">
+            <h3>Professional Overview</h3>
+          </div>
+          <div class="section-content">
+            <p>Experienced Full Stack Developer with 5+ years of expertise in web development. Specialized in Angular, Node.js, and .NET technologies. Strong track record of delivering high-quality solutions for enterprise clients.</p>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <div class="section-header">
+            <h3>Skills</h3>
+          </div>
+          <div class="skills-list">
+            <span class="skill-tag">Angular</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">.NET Core</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Azure</span>
+            <span class="skill-tag">REST APIs</span>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <div class="section-header">
+            <h3>Employment History</h3>
+          </div>
+          <div class="employment-item">
+            <div class="job-title">Senior Full Stack Developer</div>
+            <div class="company">Tech Solutions Inc.</div>
+            <div class="duration">Jan 2022 - Present</div>
+            <p class="description">Led development team of 5 members, implemented microservices architecture, reduced system response time by 40%.</p>
+          </div>
+          <div class="employment-item">
+            <div class="job-title">Web Developer</div>
+            <div class="company">Digital Innovations LLC</div>
+            <div class="duration">Mar 2020 - Dec 2021</div>
+            <p class="description">Developed and maintained multiple client websites, implemented responsive designs, integrated payment systems.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-lg-4">
+        <div class="profile-card">
+          <div class="card-header">
+            <h3>Profile Stats</h3>
+          </div>
+          <div class="card-body">
+            <div class="stat-item">
+              <i class="fas fa-star"></i>
+              <div class="stat-info">
+                <span class="stat-value">4.9/5</span>
+                <span class="stat-label">Job Success</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-clock"></i>
+              <div class="stat-info">
+                <span class="stat-value">2,140</span>
+                <span class="stat-label">Hours Worked</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-project-diagram"></i>
+              <div class="stat-info">
+                <span class="stat-value">34</span>
+                <span class="stat-label">Jobs Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-card mt-4">
+          <div class="card-header">
+            <h3>Availability</h3>
+          </div>
+          <div class="card-body">
+            <div class="availability-status">
+              <i class="fas fa-check-circle text-success"></i>
+              <span>Available for work</span>
+            </div>
+            <div class="hourly-rate">
+              <span class="rate">$45.00</span>
+              <span class="period">/hr</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-card mt-4">
+          <div class="card-header">
+            <h3>Verifications</h3>
+          </div>
+          <div class="card-body">
+            <div class="verification-item">
+              <i class="fas fa-envelope text-success"></i>
+              <span>Email Verified</span>
+            </div>
+            <div class="verification-item">
+              <i class="fas fa-id-card text-success"></i>
+              <span>Identity Verified</span>
+            </div>
+            <div class="verification-item">
+              <i class="fas fa-phone text-success"></i>
+              <span>Phone Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

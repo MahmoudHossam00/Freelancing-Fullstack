@@ -1,0 +1,82 @@
+<div class="jobs-available-section">
+  <div class="hero-overlay"></div>
+  <div class="jobs-available-content">
+
+    <div class="jobs-illustration">
+      <div>
+        <h1 class="jobs-count">Manage and track your ongoing projects</h1>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="projects-container">
+    <div class="projects-header">
+      <div class="header-content">
+        <h1>My Projects</h1>
+        <!-- <p class="header-subtitle">Manage and track your ongoing projects</p> -->
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-value">{{projects.length}}</span>
+          <span class="stat-label">Total Projects</span>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noProjects>
+      <div class="no-projects">
+        <div class="empty-state">
+          <i class="fas fa-folder-open"></i>
+          <h2>No Projects Found</h2>
+          <p>You haven't created any projects yet.</p>
+        </div>
+      </div>
+    </ng-template>
+  
+    <div class="projects-grid" *ngIf="projects.length > 0; else noProjects">
+      <div class="project-card" *ngFor="let project of projects">
+        <div class="project-header">
+          <h2 class="project-title">{{project.title}}</h2>
+          <span class="project-status" [ngClass]="project.status.toString().toLowerCase()">
+            <i class="fas fa-circle"></i>
+            {{project.status}}
+          </span>
+        </div>
+        
+        <p class="project-description">{{project.description}}</p>
+        
+        <div class="project-details">
+          <div class="detail-row">
+            <i class="fas fa-calendar"></i>
+            <span>Created: {{project.createdAt | date:'mediumDate'}}</span>
+          </div>
+
+          <div class="detail-row">
+            <i class="fas fa-calendar-times"></i>
+            <span>Ended At: {{project.endDate ? (project.endDate | date:'mediumDate') : 'still in progress'}}</span>
+          </div>
+          
+          <div class="detail-row">
+            <i class="fas fa-star"></i>
+            <span>Experience Level: {{project.experienceLevel}} </span>
+          </div>
+
+          <div class="detail-row">
+            <i class="fas fa-clock"></i>
+            <span>Expected Duration : {{project.expectedDuration}} Days</span>
+          </div>
+        </div>
+  
+        <div class="project-actions">
+          <button class="btn-secondary" (click)="viewProjectDetails(project.id,project.projectType)">
+            <i class="fas fa-info-circle"></i> Details
+          </button>
+          <button class="btn-primary" (click)="getprojectById(project.id)">
+            <i class="fas fa-tasks"></i> Milestones
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

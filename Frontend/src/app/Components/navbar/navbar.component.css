@@ -1,0 +1,215 @@
+.navbar {
+  background: #175b99;
+
+  /* background: #4dac72; */
+  /* background: linear-gradient(135deg, #1a374d 0%, #142b3b 100%); */
+
+  /* border-bottom: 1px solid #e4ebe4; */
+  /* padding: 0.5rem 0; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+}
+
+
+
+.navbar-logo {
+  height: 30px;
+  padding-left: 20px;
+  /* margin-left: 0; */
+}
+
+/* Navigation Links */
+.nav-link {
+  color: #f8f8f8;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #94a3b8;
+}
+
+
+
+/* Dropdown Styles */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 220px;
+}
+
+.dropdown-item {
+  color: #001e00;
+  font-size: 0.95rem;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color:#94a3b8;
+  /* background: linear-gradient(135deg, #f8fafc, #175b99); */
+  /* color: white; */
+}
+
+.dropdown-item2 {
+  color: #175b99;
+  font-weight: bold;
+  font-size: 0.95rem;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+}
+
+/* Icon Links */
+.icon-link {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  position: relative;
+  color: #ffffff;
+  transition: all 0.2s ease;
+  margin: 0 8px;
+}
+
+
+.icon-link:hover {
+  color: #94a3b8;
+}
+
+/* Badges */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%);
+  font-size: 0.7rem;
+  padding: 0.25em 0.5em;
+}
+
+/* Balance Link */
+.balance-link {
+
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  color: #001e00;
+  font-weight: 600;
+}
+
+.balance-link:hover {
+  background: #e4ebe4;
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
+  width: 320px;
+  padding: 0;
+}
+
+.notification-header {
+  border-bottom: 1px solid #e4ebe4;
+}
+
+.notification-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f2f7f2;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.notification-item:hover {
+  background-color: #f8f9fa;
+}
+
+.notification-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #001e00;
+}
+.navbar-nav .nav-link {
+  font-size: 1.2rem;  /* Adjust this value as needed */
+}
+.navbar-nav .icon-link i {
+  font-size: 1.5rem;  /* Adjust this value as needed */
+}
+.centered{
+  display: flex;
+  justify-content:flex-end;
+}
+/* Sign Up Button */
+.signup-btn {
+  background-color: #108a00;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+
+
+.signup-btn:hover {
+  background-color: #94a3b8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    padding: 1rem 0;
+
+  }
+
+  .balance-link {
+    display: inline-block;
+    margin: 0.5rem 0;
+  }
+
+  .icon-link {
+    padding: 0.75rem;
+  }
+}
+
+
+
+
+
+
+
+/* Add this to your existing navbar CSS */
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.user-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.log {
+  font-size: 1.15rem;
+
+}

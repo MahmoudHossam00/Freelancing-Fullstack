@@ -1,0 +1,126 @@
+<div class="admin-layout mt-2">
+ 
+
+  <div class="profile-container mt-5">
+    
+
+    <!-- Add Tab Navigation -->
+    <div class=" d-flex flex-row">
+      <div class="profile-tabs mt-2 col-2">
+        <div class="container">
+          <ul class="nav nav-tabs d-flex flex-column">
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'admin-dashboard'"
+              (click)="setActiveTab('admin-dashboard')"
+            >
+              <i class="fa fa-folder"></i> Statistics
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'banned'"
+              (click)="setActiveTab('banned')"
+            >
+              <i class="fa fa-folder"></i> BannedUsers
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'allusers'"
+              (click)="setActiveTab('allusers')"
+            >
+              <i class="fa fa-briefcase"></i> All Users
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'addadmin'"
+              (click)="setActiveTab('addadmin')"
+            >
+              <i class="fa fa-graduation-cap"></i> Add Admin
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'validation'"
+              (click)="setActiveTab('validation')"
+            >
+              <i class="fa fa-certificate"></i> Validation Requests
+            </a>
+          </li>
+          <!-- <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'allpayments'"
+              (click)="setActiveTab('allpayments')"
+            >
+              <i class="fa fa-certificate"></i> All Payments
+            </a>
+          </li> -->
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'disputes'"
+              (click)="setActiveTab('disputes')"
+            >
+              <i class="fa fa-certificate"></i> Disputes
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="profile.role == 'Admin'">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'admin-data-management'"
+              (click)="setActiveTab('admin-data-management')"
+            >
+              <i class="fa fa-user"></i> Admin data management
+            </a>
+          </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container mt-4 col-10">
+      <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-12">
+          <div *ngIf="activeTab === 'allusers'">
+            <app-allusers></app-allusers>
+          </div>
+          <div *ngIf="activeTab === 'admin-dashboard'">
+            <app-admin-dashboard></app-admin-dashboard>
+          </div>
+
+          <div *ngIf="activeTab === 'banned'">
+            <app-banned-users></app-banned-users>
+          </div>
+
+          <div *ngIf="activeTab === 'addadmin'" class="card">
+            <app-add-admin></app-add-admin>
+          </div>
+
+          <div *ngIf="activeTab === 'validation'" class="card">
+            <app-identity-verification-deicision></app-identity-verification-deicision>
+          </div>
+
+          <!-- <div *ngIf="activeTab === 'allpayments'" class="card">
+            <app-all-payments></app-all-payments>
+          </div> -->
+          <div *ngIf="activeTab === 'disputes'" class="card">
+            <app-disputesystem></app-disputesystem>
+          </div>
+          <div *ngIf="activeTab === 'admin-data-management'">
+            <app-admin-data-management></app-admin-data-management>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

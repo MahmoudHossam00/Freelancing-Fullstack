@@ -1,0 +1,96 @@
+
+      <main class="banned-users-dashboard">
+        <div class="dashboard-container">
+          <div class="dashboard-header">
+            <div class="header-content">
+              <h1 class="dashboard-title">Banned Users Management</h1>
+              <div class="search-container">
+                <div class="search-wrapper">
+                  <i class="fas fa-search search-icon"></i>
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Search banned users..."
+                    (input)="search(searched.value)"
+                    #searched
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>User</th>
+                  <th>Ban Period</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (ban of searchedbans; track $index) {
+                  <tr class="user-row">
+                    <td>
+                    <span class="user-id">#{{ ban.id }}</span>
+                    </td>
+                    <td class="user-info">
+                      <div class="user-details">
+                        <span class="user-name">{{ ban.bannedUserName }}</span>
+                      </div>
+                    </td>
+                    <td class="ban-period">
+                      <div class="date-group">
+                        <div class="date-item">
+                          <i class="fas fa-calendar-alt"></i>
+                          <span>From: {{ ban.banDate | date:'mediumDate' }}</span>
+                        </div>
+                        <div class="date-item">
+                          <i class="fas fa-calendar-check"></i>
+                          <span>To: {{ ban.banEndDate | date:'mediumDate' }}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="status-cell">
+                      <span class="status-badge" [class.active]="getDateDiff(ban.banEndDate.toString())<0"
+                      [class.expired]="getDateDiff(ban.banEndDate.toString())>=0">
+                        {{ getDateDiff(ban.banEndDate.toString()) < 0 ? 'Active' : 'Expired' }}
+                      </span>
+                    </td>
+                    <td class="actions-cell">
+                      <div class="action-buttons">
+                        <button class="btn-view" (click)="navigatetodetails(ban.id)" *ngIf="ban.id !== undefined">
+                          <i class="fas fa-eye"></i>
+                          <span class="btn-text">View Details</span>
+                        </button>
+                        <button class="btn-update" [routerLink]="['/updateban', ban.id]" *ngIf="ban.id !== undefined && getDateDiff(ban.banEndDate.toString()) < 0">
+                          <i class="fas fa-edit"></i>
+                          <span class="btn-text">Update Ban</span>
+                        </button>
+                        <button class="btn-delete"
+                        *ngIf="ban.id !== undefined && getDateDiff(ban.banEndDate.toString()) < 0"
+                         (click)="Delete(ban.id,ban)">
+                          <i class="fas fa-trash-alt"></i>
+                          Delete Ban
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+                @empty {
+                  <tr class="empty-row">
+                    <td colspan="4">
+                      <div class="empty-state">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No Banned Users Found</p>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
