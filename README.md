@@ -63,49 +63,34 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 
 ### Key Models
 
+#### Core Entities
 ```mermaid
 classDiagram
+    direction TB
+    
     class User {
-        +string Id
-        +UserType Type
-        +decimal Balance
-        +DateTime? BannedUntil
-        +UserSkill[] Skills
-        +PortfolioProject[] PortfolioProjects
-        +Certificate[] Certificates
-        +Education[] Educations
+        <<Entity>>
+        +Id string
+        +UserType string
+        +Balance decimal
     }
-
+    
     class Project {
-        +int Id
-        +ProjectType Type
-        +ProjectStatus Status
-        +Milestone[] Milestones
-        +Proposal[] Proposals
-        +ProjectSkill[] RequiredSkills
+        <<Entity>>
+        +Id int
+        +Type string
+        +Status string
     }
-
+    
     class Payment {
-        +int Id
-        +PaymentType Type
-        +string StripeTransactionId
-        +DateTime? EscrowReleaseDate
+        <<Entity>>
+        +Id int
+        +Type string
+        +Amount decimal
     }
-
-    class PortfolioProject {
-        +int Id
-        +PortfolioProjectImage[] Images
-        +Skill[] SkillsDemonstrated
-    }
-
-    User "1" --> "*" Project : PostedProjects
-    User "1" --> "*" Proposal : Submissions
-    Project "1" --> "*" Milestone : Contains
-    Project "1" --> "*" Proposal : Receives
-    Proposal "1" --> "1" ProposalConfirmation : Requires
-    User "1" --> "*" Notification : Receives
-    User "1" --> "*" Payment : Initiates
-    PortfolioProject "1" --> "*" PortfolioProjectImage : Has
+    
+    User "1" --> "*" Project : Creates
+    Project "1" --> "*" Payment : Generates
 
 
 
