@@ -63,34 +63,26 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 
 ### Key Models
 
-#### Core Entities
+#### Core Entity Relationships
 ```mermaid
 classDiagram
-    direction TB
-    
     class User {
-        <<Entity>>
-        +Id string
-        +UserType string
-        +Balance decimal
+        string Id
+        string UserType
+        decimal Balance
     }
-    
     class Project {
-        <<Entity>>
-        +Id int
-        +Type string
-        +Status string
+        int Id
+        string Type
+        string Status
     }
-    
     class Payment {
-        <<Entity>>
-        +Id int
-        +Type string
-        +Amount decimal
+        int Id
+        string Type
+        decimal Amount
     }
-    
-    User "1" --> "*" Project : Creates
-    Project "1" --> "*" Payment : Generates
+    User "1" --> "*" Project
+    Project "1" --> "*" Payment
 
 
 
