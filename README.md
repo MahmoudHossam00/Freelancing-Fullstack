@@ -187,12 +187,12 @@ This project requires the following tools and technologies:
 - **Visual Studio 2022**: The recommended Integrated Development Environment (IDE) for this project, providing full support for .NET 8.0 and additional tools like scaffolding and debugging.
 - **.NET 8.0 SDK**: The project is built using the .NET 8.0 framework, which must be installed for development and running the application.
 - **SQL Server**: A relational database system used to store the forum data, including user information, posts, and comments.
+- **Angular 19**
 
 
 ### NuGet Packages  
 
 - **Google.Apis.Auth.AspNetCore3 (1.69.0)** - Enables Google authentication in ASP.NET Core applications.  
-- **GoogleMaps.LocationServices (1.2.0.5)** - Provides geolocation services using Google Maps API.  
 - **MailKit (4.10.0)** - A cross-platform mail client library for sending and receiving emails.  
 - **Microsoft.AspNetCore.Authentication.Facebook (8.0.13)** - Handles Facebook authentication in ASP.NET Core applications.  
 - **Microsoft.AspNetCore.Authentication.Google (8.0.13)** - Manages Google authentication in ASP.NET Core applications.  
