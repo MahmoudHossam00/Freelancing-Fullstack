@@ -61,9 +61,9 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 | Real-Time         | `ChatController`, `NotificationsController` |
 | Admin             | `BansController`, `CategoryController`, `SubcategoryController` |
 
-### Key Models
 
-#### Core Entity Relationships
+### Key Models and Entity Relationships
+
 ```mermaid
 classDiagram
     %% Core Entities
@@ -177,7 +177,6 @@ classDiagram
     CertificatesController --> User
     EducationsController --> User
     ExperiencesController --> User
-
 
 
 
