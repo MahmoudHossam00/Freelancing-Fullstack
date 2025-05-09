@@ -178,7 +178,7 @@ classDiagram
     EducationsController --> User
     ExperiencesController --> User
 
-
+```
 
 ## Required Tools and Technologies
 
