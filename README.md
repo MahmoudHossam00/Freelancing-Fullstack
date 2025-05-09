@@ -1,12 +1,12 @@
 # Freelancing Platform (Angular & ASP.NET Core)
 
-A full-stack freelancing platform connecting clients with freelancers, supporting bidding/fixed-price projects, real-time chat, payments, and advanced role management.
+A full-stack freelancing platform connecting clients with freelancers, supporting bidding/fixed-price projects,With real time bidding, real-time chat, payments, and advanced role management.
 
 ## Key Features
 
 ### User Roles
-- **Freelancers**: Create profiles, bid on projects, withdraw earnings  
-- **Clients**: Post projects (fixed-price/bidding), manage milestones  
+- **Freelancers**: Create profiles, bid on projects, withdraw earnings, Apply for proposals, manage profile
+- **Clients**: Post projects (fixed-price/bidding), Accept proposals, Check freelancers profile and contact them
 - **Admins**: Moderate content, manage categories/skills, handle disputes  
 
 ### Core Functionalities
@@ -22,8 +22,8 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 
 - **Real-Time Features**  
   - SignalR chat & notifications  
-  - Live project updates  
-  - Sentiment analysis on reviews  
+  - Live project updates for biddings 
+  - Sentiment analysis on reviews using AI  
 
 - **Profile Management**  
   - Portfolio projects with images  
@@ -33,7 +33,7 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 ## Tech Stack
 
 ### Frontend
-- **Angular 15+** with TypeScript  
+- **Angular 19** with TypeScript  
 - **PrimeNG** Component Library  
 - **RxJS** for state management  
 - **SignalR Client** for real-time features  
@@ -46,8 +46,8 @@ A full-stack freelancing platform connecting clients with freelancers, supportin
 - **JWT Authentication** with Role-based authorization  
 
 ### Infrastructure
-- **Middleware**: Request logging, exception handling  
-- **Filters**: Action/Result filters for validation  
+- **Middleware**: Request logging, exception handling,Custom middleware for banning users 
+- **Filters**: Action/Result filters for validation, Custom filters for allowing Authors only
 - **Background Services**: Payment reconciliation  
 
 ## Project Structure
